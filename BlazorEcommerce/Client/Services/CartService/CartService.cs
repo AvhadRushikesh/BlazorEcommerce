@@ -10,6 +10,7 @@ namespace BlazorEcommerce.Client.Services.CartService
         {
             _localStorage = localStorage;
         }
+
         public event Action OnChange;
 
         /*  We try to get the item off the local storage first, So in the local storage, You can store in essence, anything you want 
@@ -25,6 +26,7 @@ namespace BlazorEcommerce.Client.Services.CartService
             cart.Add(cartItem);
 
             await _localStorage.SetItemAsync("cart", cart);
+            OnChange.Invoke();
         }
 
         public async Task<List<CartItem>> GetCartItems()
