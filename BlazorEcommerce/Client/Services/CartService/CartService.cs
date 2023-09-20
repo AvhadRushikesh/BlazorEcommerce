@@ -23,7 +23,7 @@ namespace BlazorEcommerce.Client.Services.CartService
             We Try to get the Cart First if there is no Cart in the local storage we will create one & then we will simply add new item.*/
         public async Task AddToCart(CartItem cartItem)
         {
-            if ((await _authStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated)
+            if (await IsUserAuthenticated())
             {
                 Console.WriteLine("User is authenticated");
             }
@@ -120,6 +120,11 @@ namespace BlazorEcommerce.Client.Services.CartService
                 cartItem.Quantity = product.Quantity;
                 await _localStorage.SetItemAsync("cart", cart);
             }
+        }
+
+        private async Task<bool> IsUserAuthenticated()
+        {
+            return (await _authStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated;
         }
     }
 }
