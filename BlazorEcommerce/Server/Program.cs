@@ -49,6 +49,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddHttpContextAccessor();  // Use HttpContextAccessor to access the User in the Services
+
 var app = builder.Build();
 
 app.UseSwaggerUI();
