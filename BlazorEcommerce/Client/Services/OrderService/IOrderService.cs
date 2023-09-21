@@ -4,5 +4,6 @@
     {
         Task PlaceOrder();
         Task<List<OrderOverviewResponse>> GetOrders();
+        Task<OrderDetailsResponse> GetOrderDetals(int orderId);
     }
 }
