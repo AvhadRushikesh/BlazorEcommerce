@@ -16,6 +16,6 @@ namespace BlazorEcommerce.Shared
         public bool Editing { get; set; } = false;
 
         [NotMapped]
-        public bool IsNull { get; set; } = false;
+        public bool IsNew { get; set; } = false;
     }
 }
