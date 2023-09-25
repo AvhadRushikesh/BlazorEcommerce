@@ -14,8 +14,8 @@
             var response = new ServiceResponse<List<Product>>
             {
                 Data = await _context.Products
-                .Where(p => p.Featured)
-                .Include(p => p.Variants)
+                .Where(p => p.Featured && p.Visible && !p.Delete)
+                .Include(p => p.Variants.Where(v => v.Visible && !v.Delete))
                 .ToListAsync()
             };
             return response;
@@ -25,9 +25,9 @@
         {
             var response = new ServiceResponse<Product>();
             var product = await _context.Products
-                .Include(p => p.Variants)
+                .Include(p => p.Variants.Where(v => v.Visible && !v.Delete))
                 .ThenInclude(v => v.ProductType)
-                .FirstOrDefaultAsync(p => p.Id == productId);
+                .FirstOrDefaultAsync(p => p.Id == productId && !p.Delete && p.Visible);
             if (product == null)
             {
                 response.Success = false;
@@ -44,7 +44,10 @@
         {
             var response = new ServiceResponse<List<Product>>
             {
-                Data = await _context.Products.Include(p => p.Variants).ToListAsync()
+                Data = await _context.Products
+                    .Where(p => p.Visible && !p.Delete)
+                    .Include(p => p.Variants.Where(v => v.Visible && !v.Delete))
+                    .ToListAsync()
             };
 
             return response;
@@ -55,8 +58,9 @@
             var response = new ServiceResponse<List<Product>>
             {
                 Data = await _context.Products
-                .Where(p => p.Category.Url.ToLower().Equals(categoryUrl.ToLower()))
-                .Include(p => p.Variants)
+                .Where(p => p.Category.Url.ToLower().Equals(categoryUrl.ToLower()) &&
+                    p.Visible && !p.Delete)
+                .Include(p => p.Variants.Where(v => v.Visible && !v.Delete))
                 .ToListAsync()
             };
 
@@ -102,9 +106,9 @@
             var pageResults = 2f;
             var pageCount = Math.Ceiling((await FindProductsBySearchText(searchText)).Count / pageResults);
             var products = await _context.Products
-                                    .Where(p => p.Title.ToLower().Contains(searchText.ToLower())
-                                    ||
-                                    p.Description.ToLower().Contains(searchText.ToLower()))
+                                    .Where(p => p.Title.ToLower().Contains(searchText.ToLower()) ||
+                                        p.Description.ToLower().Contains(searchText.ToLower()) &&
+                                        p.Visible && !p.Delete)
                                     .Include(p => p.Variants)
                                     .Skip((page - 1) * (int)pageResults)
                                     .Take((int)pageResults)
@@ -125,9 +129,9 @@
         private async Task<List<Product>> FindProductsBySearchText(string searchText)
         {
             return await _context.Products
-                            .Where(p => p.Title.ToLower().Contains(searchText.ToLower())
-                            ||
-                            p.Description.ToLower().Contains(searchText.ToLower()))
+                            .Where(p => p.Title.ToLower().Contains(searchText.ToLower()) ||
+                                p.Description.ToLower().Contains(searchText.ToLower()) &&
+                                p.Visible && !p.Delete)
                             .Include(p => p.Variants)
                             .ToListAsync();
         }
