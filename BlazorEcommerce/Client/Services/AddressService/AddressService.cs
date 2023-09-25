@@ -17,7 +17,7 @@
 
         public async Task<Address> GetAddress()
         {
-            var response = await _http.GetFromJsonAsync<ServiceResponse<Address>>("api/addres");
+            var response = await _http.GetFromJsonAsync<ServiceResponse<Address>>("api/address");
             return response.Data;
         }
     }
