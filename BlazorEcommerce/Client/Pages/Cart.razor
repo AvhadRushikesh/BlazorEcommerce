@@ -23,7 +23,7 @@ else
                 </div>
                 <div class="name">
                     <h5><a href="/product/@product.ProductId">@product.Title</a></h5>
-                    <span>@product.ProductType</span><br/>
+                    <span>@product.ProductType</span><br />
                     <input type="number" value="@product.Quantity"
                         @onchange="@((ChangeEventArgs e) => UpdateQuantity(e, product))"
                         class="form-control input-quantity"
@@ -47,7 +47,7 @@ else
             <AddressForm />
         </div>
     }
-    <button @onclick="PlaceOrder" class="btn btn-success float-end mt-1">Checkout</button>
+    <button @onclick="PlaceOrder" class="btn alert-success float-end mt-1">Checkout</button>
 }
 
 @code {
@@ -60,6 +60,7 @@ else
         isAuthenticated = await AuthService.IsUserAuthenticated();
         await LoadCart();
     }
+
     private async Task RemoveProductFromCart(int productId, int productTypeId)
     {
         await CartService.RemoveProductFromCart(productId, productTypeId);

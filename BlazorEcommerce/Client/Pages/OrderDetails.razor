@@ -39,6 +39,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        order = await OrderService.GetOrderDetals(OrderId);
+        order = await OrderService.GetOrderDetails(OrderId);
     }
 }
