@@ -153,7 +153,6 @@ else
     {
         if (Id == 0)
         {
-            loading = false;
             product = new Product { IsNew = true };
             btnText = "Create Product";
         }
@@ -165,14 +164,11 @@ else
                 msg = $"Product with Id '{Id}' does not exist!";
                 return;
             }
-            else
-            {
-                product = dbProduct;
-                product.Editing = true;
-                btnText = "Update Product";
-            }
-            loading = false;
+            product = dbProduct;
+            product.Editing = true;
+            btnText = "Update Product";
         }
+        loading = false;
     }
 
     void RemoveVariant(int productTypeId)
