@@ -22,8 +22,8 @@ namespace BlazorEcommerce.Client.Services.ProductService
         public async Task<Product> CreateProduct(Product product)
         {
             var result = await _http.PostAsJsonAsync($"api/product", product);
-            var newProduct = (await result.Content.ReadFromJsonAsync<ServiceResponse<Product>>()).Data;
-            return newProduct;
+            var newProduct = (await result.Content.ReadFromJsonAsync<ServiceResponse<Product>>());
+            return newProduct.Data;
         }
 
         public async Task DeleteProduct(Product product)

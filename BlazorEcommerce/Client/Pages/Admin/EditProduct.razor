@@ -18,7 +18,7 @@ else
     }
     else if (product.IsNew)
     {
-        <h3>Create a new product</h3>
+        <h3>Create New Product</h3>
     }
 
     <EditForm Model="product" OnValidSubmit="AddOrUpdateProduct">
@@ -153,6 +153,7 @@ else
     {
         if (Id == 0)
         {
+            loading = false;
             product = new Product { IsNew = true };
             btnText = "Create Product";
         }
