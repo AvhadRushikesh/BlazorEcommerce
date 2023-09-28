@@ -233,7 +233,7 @@ else
     void RemoveImage(int id)
     {
         var image = product.Images.FirstOrDefault(i => i.Id == id);
-        if (image == null)
+        if (image != null)
         {
             product.Images.Remove(image);
         }
