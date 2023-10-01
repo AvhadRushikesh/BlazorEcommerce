@@ -22,6 +22,10 @@ namespace BlazorEcommerce.Server.Controllers
             return Ok(session.Url);
         }
 
+        /* stripe  listen --forward-to https://localhost:7283/api/payment 
+         * Run the above command in terminal to hit this method after making payment
+         * Will remove order from Cart & add order to database
+         */
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<bool>>> FulFillOrder()
         {
